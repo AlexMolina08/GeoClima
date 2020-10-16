@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geoclima/screens/location_screen.dart';
 
 void main() {
   runApp(GeoClima());
@@ -9,7 +10,7 @@ class GeoClima extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
+        home: LocationScreen()
     );
   }
 }
