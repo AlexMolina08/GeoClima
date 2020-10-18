@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geoclima/utilities/constants.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:geoclima/services/Location.dart';
 
 
 class LoadingScreen extends StatefulWidget {
@@ -12,17 +12,16 @@ class LoadingScreen extends StatefulWidget {
 
 class _LoadingScreenState extends State<LoadingScreen> {
 
-  String current_position;
 
   void getLocation() async{
-    //obtenemos posicion de getCurrentPosition
-    Position position = await getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
-    current_position = '$position';
-    print(current_position);
+    Location location = Location();
+    await location.getCurrentLocation();
+    print("Latitud: ${location.latitude} , Longitud ${location.longitude}");
   }
 
   /*
-  * initState se llama únicamente al crear el widget en el widget tree
+  * initState se llama únicamente al crear este widget.
+  * Al iniciar el widget , obtenemos posición del dispositivo
   * */
   @override
   void initState(){
@@ -32,21 +31,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            Text(
-              'Las coordenadas de tu posición son : ',
-              style: kMessageTextStyle,
-            ),
-            Text(
-              'pos : $current_position', //mostramos la ubicación
-              style: kMessageTextStyle,
-            ),
-          ],
-        )
-      ),
+
     );
   }
 }
