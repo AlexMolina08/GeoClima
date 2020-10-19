@@ -1,7 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:geoclima/utilities/constants.dart';
 
-class LocationScreen extends StatelessWidget {
+class LocationScreen extends StatefulWidget {
+
+  final locationWeather;
+
+  LocationScreen({@required this.locationWeather});
+
+  @override
+  _LocationScreenState createState() => _LocationScreenState();
+}
+
+class _LocationScreenState extends State<LocationScreen> {
+
+  int temperature;
+  int conditionCode;
+  String cityName;
+
+  void updateUI(dynamic weatherData){
+    temperature = (weatherData['main']['temp']).toInt(); //obtenemos la temperatura de weatherData y la
+                                                         //convertimos en un entero
+    conditionCode = weatherData['weather'][0]['id'];
+    cityName = weatherData['name'];
+  }
+
+
+  @override
+  void initState() {
+    print(widget.locationWeather);
+    //al crear la pagina , se inicializan las propiedades
+    updateUI(widget.locationWeather);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,12 +89,13 @@ class LocationScreen extends StatelessWidget {
                 ],
               ),
 
+              //TEMPERATURA
               Padding(
                 padding: EdgeInsets.only(left:15.0),
                 child: Row(
                   children: [
                     Text(
-                      "9º",
+                      '${temperature.round()}º ',
                       style: kTemperatureTextStyle,
                     ),
                     Text(
@@ -75,8 +107,9 @@ class LocationScreen extends StatelessWidget {
               ),
 
               Text(
-                "Hoy hace frío en Granada 🥶 , ¡ Haz que tu abuela esté orgullosa y coge abrigo ! 🧥",
+                "Hoy hace frío en $cityName 🥶, ¡ Haz que tu abuela esté orgullosa y coge abrigo ! 🧥",
                 style: kMessageTextStyle,
+                textAlign: TextAlign.right,
               )
 
             ],

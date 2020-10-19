@@ -16,15 +16,15 @@ class NetworkHelper{
 
   NetworkHelper({@required this.apiUrl});
 
+  /*
+  * Obtener datos del clima de openWeather a partir de apiUrl
+  * */
   Future getData() async{
-    String data; //donde se va a almacenar el json
     http.Response response = await http.get(apiUrl); //obtenemos los datos
     // 200 = OK (se ha atendido a la peticion con exito y tenemos el json)
     if(response.statusCode == 200){
-      data = response.body; //guardamos el json en el string data
-
-      return jsonDecode(data);
-
+      String data = response.body; //guardamos el json en el string data
+      return jsonDecode(data); //devuelve hashMap<String,dynamic>
     }else{
       print('ERROR: ${response.statusCode}');
     }

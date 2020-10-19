@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geoclima/screens/loading_screen.dart';
+import 'package:geoclima/screens/location_screen.dart';
 
 void main() {
   runApp(GeoClima());
