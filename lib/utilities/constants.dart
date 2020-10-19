@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+
+String kapiKey = '900b943bb1d48f5e785c8a1dc5a0be91';
+
 const TextStyle kButtonTextStyle = TextStyle(
   fontFamily: "Poppins",
   fontWeight: FontWeight.w600,

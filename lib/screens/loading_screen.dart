@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:geoclima/utilities/constants.dart';
 import 'package:geoclima/services/Location.dart';
-import 'package:http/http.dart' as http; //para usar todo lo que hay en el paquete con hhtp
-import 'dart:convert';
-
+import 'package:geoclima/services/networking.dart';
+import 'package:geoclima/utilities/constants.dart';
 
 class LoadingScreen extends StatefulWidget {
   //get the location of the current user
@@ -13,45 +11,26 @@ class LoadingScreen extends StatefulWidget {
 
 class _LoadingScreenState extends State<LoadingScreen> {
 
+  double latitude;
+  double longitude;
+  NetworkHelper network;
+
   /*
-  * Obtener latitud y longitud del dispositivo
+  * Obtener latitud y longitud del dispositivo y los datos del tiempo
   * usando getCurrentLocation de la clase Latitude de geolocator package
   * */
-  void getLocation() async {
+  void getLocationData() async {
     Location location = Location();
     await location.getCurrentLocation();
-    print("Latitud: ${location.latitude} , Longitud ${location.longitude}");
-  }
+    latitude = location.latitude;
+    longitude = location.longitude;
 
-  /*
-  * Obtener datos de openweather API
-  *
-  * */
+    network = NetworkHelper(
+      apiUrl:
+          'http://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&mode=json&appid=$kapiKey',
+    );
 
-  void getData() async {
-    String data ;
-    //El metodo devuelve un Future<Response>
-    http.Response response = await http.get('http://api.openweathermap.org/data/2.5/weather?lat=37.207207207207205&lon=-3.619648330507012&mode=json&appid=900b943bb1d48f5e785c8a1dc5a0be91',);
-
-    if(response.statusCode == 200) {
-      /*
-      * El resultado del request es un json
-      * es decir , los datos están en formato {"key" : value}
-      * */
-      data = response.body;
-      print(data);
-
-      var temp = jsonDecode(data) ['main']['temp']; // temperatura
-      var condition_number = jsonDecode(data)['weather'][0]['id']; //condition_number
-      var city_name = jsonDecode(data)['name']; //city name
-
-      print('temperatura: $temp\ncondition number: $condition_number\nnombre ciudad: $city_name');
-      print('temperatura: $temp\ncondition number: $condition_number\nnombre ciudad: $city_name');
-
-    }else {
-      print(response.statusCode);
-    }
-
+    network.getData();
   }
 
   /*
@@ -60,8 +39,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   * */
   @override
   void initState() {
-    getLocation();
-    getData();
+    getLocationData();
     super.initState();
   }
 
