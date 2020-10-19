@@ -4,7 +4,7 @@
 * and store it
 * */
 
-import 'package:geolocator/geolocator.dart';
+import 'package:geolocator/geolocator.dart' as geolocator;
 
 class Location {
 
@@ -16,7 +16,7 @@ class Location {
   Future<void> getCurrentLocation() async{
 
     try {
-      Position position = await getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
+      geolocator.Position position = await geolocator.getCurrentPosition(desiredAccuracy: geolocator.LocationAccuracy.low);
 
       latitude = position.latitude;
       longitude = position.longitude;

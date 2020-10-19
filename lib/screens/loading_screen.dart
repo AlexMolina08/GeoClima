@@ -3,6 +3,7 @@ import 'package:geoclima/services/Location.dart';
 import 'package:geoclima/services/networking.dart';
 import 'package:geoclima/utilities/constants.dart';
 
+
 class LoadingScreen extends StatefulWidget {
   //get the location of the current user
   @override
@@ -13,7 +14,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   double latitude;
   double longitude;
-  NetworkHelper network;
 
   /*
   * Obtener latitud y longitud del dispositivo y los datos del tiempo
@@ -22,15 +22,19 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void getLocationData() async {
     Location location = Location();
     await location.getCurrentLocation();
+
     latitude = location.latitude;
     longitude = location.longitude;
 
-    network = NetworkHelper(
+    NetworkHelper network = NetworkHelper(
       apiUrl:
           'http://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&mode=json&appid=$kapiKey',
     );
 
-    network.getData();
+    var weatherData = await network.getData();
+
+
+
   }
 
   /*
