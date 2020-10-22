@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:geoclima/utilities/constants.dart';
+import 'package:translator/translator.dart'; //para traducir el nombre de la ciudad al inglés
 
-class CityScreen extends StatelessWidget {
+
+class CityScreen extends StatefulWidget {
+  @override
+  _CityScreenState createState() => _CityScreenState();
+}
+
+class _CityScreenState extends State<CityScreen> {
+
+  String _cityName; //nobre de la ciudad introducida por el usuario
+  final translator = GoogleTranslator();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +52,7 @@ class CityScreen extends StatelessWidget {
                   flex: 2 ,
                   child: TextField(
                     onChanged: (value) {
-                      print(value);
+                      _cityName = value;
                     },
                     decoration: kTextFieldInputDecoration,
                     style: kInputTextStyle
@@ -53,7 +64,13 @@ class CityScreen extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.topCenter,
                     child: FlatButton(
-                      onPressed: () {},
+                      onPressed: () async{
+                        //traducimos el nombre introducido por el usuario
+                        Translation cityTranslated = await translator.translate(_cityName , from: 'es' , to: 'en');
+                        print(cityTranslated);
+                        Navigator.pop(context , _cityName); //Hacemos pop y enviamos el nombre de la ciudad
+                                                            //introducida por el user a la pantalla anterior
+                      },
                       child: Text(
                         "Ver el tiempo",
                         style: kInformationTitleTextStyle,
@@ -61,7 +78,7 @@ class CityScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
+                //mensaje informativo de la pagina
                 Expanded(
                   flex: 5,
                   child: Container(

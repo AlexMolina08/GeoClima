@@ -4,6 +4,7 @@ import 'package:geoclima/screens/city_screen.dart';
 import 'package:geoclima/utilities/constants.dart';
 import 'package:geoclima/services/weather.dart';
 
+
 class LocationScreen extends StatefulWidget {
   final locationWeather;
   LocationScreen({this.locationWeather});
@@ -19,7 +20,6 @@ class _LocationScreenState extends State<LocationScreen> {
   AssetImage backgroundImage;
   String message;
   String cityName;
-
   bool p = false;
 
 
@@ -95,13 +95,22 @@ class _LocationScreenState extends State<LocationScreen> {
                   //Choose city button
                   FlatButton(
                     shape: CircleBorder(), //flatbutton con circle shape
-                    onPressed: (){
-                      Navigator.push(
+                    onPressed: () async{
+                      //Se va a la pagina de elegir ciudad , Location Screen y se espera a obtener
+                      //el nombre (al hacer pop en city Screen)
+                      var typedName = await Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context){
                           return CityScreen();
                         },),
                       );
+
+                      //si se ha escrito algo en el TextField , Se busca el tiempo
+                      //en esa ciudad
+                      if(typedName != null){
+
+                      }
+
                     },
                     padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0 , 0.0),
                     child: Container(

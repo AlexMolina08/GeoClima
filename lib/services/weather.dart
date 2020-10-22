@@ -13,6 +13,18 @@ import 'package:geoclima/services/networking.dart';
 * **/
 class WeatherModel {
 
+
+
+  /*
+  *
+  * Obtiene el tiempo de la ciudad pasada por parametros
+  * Devuelve los datos del tiempo en esa ubicacion
+  *
+  * */
+  void getCityWeather(String cityName){
+
+  }
+
   /*
   *
   * Obtiene el tiempo de la ubicacion actual  del dispositivo
@@ -21,7 +33,6 @@ class WeatherModel {
   * */
   Future<dynamic> getLocationWeather() async {
     Location location = Location();
-
     await location.getCurrentLocation();
 
     NetworkHelper network = NetworkHelper(
