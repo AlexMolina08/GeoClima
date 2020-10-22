@@ -33,20 +33,23 @@ class CityScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 30.0,),
+                SizedBox(
+                  height: 30.0,
+                ),
                 //TEXTFIELD CIUDAD
                 Expanded(
-                  flex: 1,
+                  flex: 2 ,
                   child: TextField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Color(0xccfafafa)
-                    ),
+                    onChanged: (value) {
+                      print(value);
+                    },
+                    decoration: kTextFieldInputDecoration,
+                    style: kInputTextStyle
                   ),
                 ),
                 //textField
                 Expanded(
-                  flex : 2,
+                  flex: 2,
                   child: Align(
                     alignment: Alignment.topCenter,
                     child: FlatButton(
@@ -60,7 +63,7 @@ class CityScreen extends StatelessWidget {
                 ),
 
                 Expanded(
-                  flex: 5 ,
+                  flex: 5,
                   child: Container(
                     child: Text(
                       "Conoce el tiempo actual de cualquier ciudad del mundo",
