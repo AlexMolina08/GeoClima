@@ -60,7 +60,7 @@ const InputDecoration kTextFieldInputDecoration = InputDecoration(
   hintStyle: TextStyle(
     color: Color(0xff9e9e9e),
   ),
-//cambiamos los border a redondeados
+  //cambiamos los border a redondeados
   border: OutlineInputBorder(
     borderSide: BorderSide.none, //quitar seleccion exterior
     borderRadius: BorderRadius.all(

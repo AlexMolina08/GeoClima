@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:geoclima/utilities/constants.dart';
 import 'package:translator/translator.dart'; //para traducir el nombre de la ciudad al inglés
 
-
 class CityScreen extends StatefulWidget {
   @override
   _CityScreenState createState() => _CityScreenState();
 }
 
 class _CityScreenState extends State<CityScreen> {
-
   String _cityName; //nobre de la ciudad introducida por el usuario
   final translator = GoogleTranslator();
 
@@ -49,14 +47,13 @@ class _CityScreenState extends State<CityScreen> {
                 ),
                 //TEXTFIELD CIUDAD
                 Expanded(
-                  flex: 2 ,
+                  flex: 2,
                   child: TextField(
-                    onChanged: (value) {
-                      _cityName = value;
-                    },
-                    decoration: kTextFieldInputDecoration,
-                    style: kInputTextStyle
-                  ),
+                      onChanged: (value) {
+                        _cityName = value;
+                      },
+                      decoration: kTextFieldInputDecoration,
+                      style: kInputTextStyle),
                 ),
                 //textField
                 Expanded(
@@ -64,12 +61,19 @@ class _CityScreenState extends State<CityScreen> {
                   child: Align(
                     alignment: Alignment.topCenter,
                     child: FlatButton(
-                      onPressed: () async{
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      color: Colors.blue[800],
+                      onPressed: () async {
                         //traducimos el nombre introducido por el usuario
-                        Translation cityTranslated = await translator.translate(_cityName , from: 'es' , to: 'en');
-                        print(cityTranslated);
-                        Navigator.pop(context , _cityName); //Hacemos pop y enviamos el nombre de la ciudad
-                                                            //introducida por el user a la pantalla anterior
+                        Translation translation = await translator
+                            .translate(_cityName, from: 'es', to: 'en');
+                        _cityName = translation.text;
+                        //lo mandamos a la pagina anterior
+                        Navigator.pop(context,
+                            _cityName); //Hacemos pop y enviamos el nombre de la ciudad
+                        //introducida por el user a la pantalla anterior
                       },
                       child: Text(
                         "Ver el tiempo",
@@ -83,7 +87,7 @@ class _CityScreenState extends State<CityScreen> {
                   flex: 5,
                   child: Container(
                     child: Text(
-                      "Conoce el tiempo actual de cualquier ciudad del mundo",
+                      "Conoce el tiempo actual de cualquier parte del mundo",
                       style: kInformationTextStyle,
                       textAlign: TextAlign.center,
                     ),

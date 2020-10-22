@@ -12,16 +12,21 @@ import 'package:geoclima/services/networking.dart';
     * Devuelve el icono de clima
 * **/
 class WeatherModel {
-
-
-
   /*
   *
   * Obtiene el tiempo de la ciudad pasada por parametros
   * Devuelve los datos del tiempo en esa ubicacion
   *
   * */
-  void getCityWeather(String cityName){
+  Future<dynamic> getCityWeather(String cityName) async{
+
+    var url = '$kWeatherUrl?q=$cityName&appid=$kapiKey&units=metric';
+
+    NetworkHelper network = NetworkHelper(apiUrl: url);
+
+    var weatherData = await network.getData();
+
+    return weatherData;
 
   }
 

@@ -26,20 +26,24 @@ class _LocationScreenState extends State<LocationScreen> {
   void updateUI(dynamic weatherData){
 
     setState(() {
-      if(weatherData == null){
-        temperature = 0;
-        weatherImage = AssetImage('images/weather/error.png');
-        message = weather.getMessage(null , null);
-        backgroundImage = weather.getBackgroundImage(0);
-
+        if (weatherData != null) {
+          temperature = (weatherData['main']['temp']).toInt(); //sólo nos interesa el valor entero de la temperatura
+          cityName = weatherData['name'];
+          int condition = weatherData['weather'][0]['id'];
+          weatherImage = weather.getWeatherImage(condition);
+          backgroundImage = weather.getBackgroundImage(condition);
+          message = weather.getMessage(temperature, cityName);
+        }else {
+          //Si weather data es null , ponemos un mensaje de error
+          temperature = 0;
+          cityName = '';
+          int condition = 0;
+          weatherImage = AssetImage('images/weather/error.png');
+          backgroundImage = weather.getBackgroundImage(condition);
+          message = "Parece que ha habido un error , intentalo de nuevo ";
+        }
       }
-      temperature = (weatherData['main']['temp']).toInt(); //sólo nos interesa el valor entero de la temperatura
-      cityName = weatherData['name'];
-      int condition = weatherData['weather'][0]['id'];
-      weatherImage = weather.getWeatherImage(condition);
-      backgroundImage = weather.getBackgroundImage(condition);
-      message = weather.getMessage(temperature, cityName);
-    });
+    );
   }
 
   @override
@@ -108,6 +112,8 @@ class _LocationScreenState extends State<LocationScreen> {
                       //si se ha escrito algo en el TextField , Se busca el tiempo
                       //en esa ciudad
                       if(typedName != null){
+                        var weatherData = await weather.getCityWeather(typedName);
+                        updateUI(weatherData);
 
                       }
 
