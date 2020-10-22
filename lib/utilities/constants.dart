@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
-String kapiKey = '900b943bb1d48f5e785c8a1dc5a0be91';
+const String kapiKey = '900b943bb1d48f5e785c8a1dc5a0be91';
+const String kWeatherUrl = 'http://api.openweathermap.org/data/2.5/weather';
 
+const kIconSize = 40.0;
+
+/*  COLORES ESPECÍFICOS */
 
 
 /*  TEXT STYLES  */
-const TextStyle kButtonTextStyle = TextStyle(
+const TextStyle kInformationTitleTextStyle = TextStyle(
   fontFamily: "Poppins",
   fontWeight: FontWeight.w600,
-  fontSize: 20.0
+  fontSize: 30.0
 );
 
 const TextStyle kTemperatureTextStyle = TextStyle(
@@ -27,9 +31,16 @@ const TextStyle kMessageTextStyle = TextStyle(
     color: Colors.white
 );
 
+const TextStyle kInformationTextStyle = TextStyle(
+    fontFamily: "Poppins",
+    fontWeight: FontWeight.w100,
+    fontSize: 20.0,
+    color: Color(0xccfafafa)
+);
+
+
 const TextStyle kLoadingTextStyle = TextStyle(
     fontFamily: "Poppins",
-    //fontWeight: FontWeight.w600,
     fontSize: 20.0,
     color: Colors.blueGrey
 );
@@ -43,3 +54,5 @@ const SpinKitSpinningCircle kSpinkit = SpinKitSpinningCircle(
 color: Colors.blueAccent,
 size: 90.0,
 );
+
+//

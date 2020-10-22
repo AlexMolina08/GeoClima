@@ -1,36 +1,52 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geoclima/screens/city_screen.dart';
 import 'package:geoclima/utilities/constants.dart';
+import 'package:geoclima/services/weather.dart';
 
 class LocationScreen extends StatefulWidget {
-
   final locationWeather;
-
-  LocationScreen({@required this.locationWeather});
+  LocationScreen({this.locationWeather});
 
   @override
   _LocationScreenState createState() => _LocationScreenState();
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-
+  WeatherModel weather = WeatherModel();
   int temperature;
-  int conditionCode;
+  AssetImage weatherImage;
+  AssetImage backgroundImage;
+  String message;
   String cityName;
 
-  void updateUI(dynamic weatherData){
-    temperature = (weatherData['main']['temp']).toInt(); //obtenemos la temperatura de weatherData y la
-                                                         //convertimos en un entero
-    conditionCode = weatherData['weather'][0]['id'];
-    cityName = weatherData['name'];
-  }
+  bool p = false;
 
+
+  void updateUI(dynamic weatherData){
+
+    setState(() {
+      if(weatherData == null){
+        temperature = 0;
+        weatherImage = AssetImage('images/weather/error.png');
+        message = weather.getMessage(null , null);
+        backgroundImage = weather.getBackgroundImage(0);
+
+      }
+      temperature = (weatherData['main']['temp']).toInt(); //sólo nos interesa el valor entero de la temperatura
+      cityName = weatherData['name'];
+      int condition = weatherData['weather'][0]['id'];
+      weatherImage = weather.getWeatherImage(condition);
+      backgroundImage = weather.getBackgroundImage(condition);
+      message = weather.getMessage(temperature, cityName);
+    });
+  }
 
   @override
   void initState() {
-    print(widget.locationWeather);
     //al crear la pagina , se inicializan las propiedades
-    updateUI(widget.locationWeather);
     super.initState();
+    updateUI(widget.locationWeather);
   }
 
   @override
@@ -39,7 +55,7 @@ class _LocationScreenState extends State<LocationScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("images/location_background.jpg"),
+              image: backgroundImage,
               fit: BoxFit.cover
               ),
         ),
@@ -48,13 +64,19 @@ class _LocationScreenState extends State<LocationScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              //My Location and City buttons
+              //My Location and Choose City buttons
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  //My Location button
                   FlatButton(
                     shape: CircleBorder(), //flatbutton con circle shape
-                    onPressed: (){},
+                    onPressed: () async{
+                      dynamic weatherData;
+                       weatherData = await weather.getLocationWeather();
+                       updateUI(weatherData);
+                       print("actualizada");
+                    },
                     padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0 , 0.0),
                     child: Container(
                       padding: EdgeInsets.all(8.0),
@@ -65,13 +87,22 @@ class _LocationScreenState extends State<LocationScreen> {
                       child: Icon(
                         Icons.near_me,
                         color: Colors.white,
-                        size: 40.0,
+                        size: kIconSize,
                       ),
                     ),
                   ),
+
+                  //Choose city button
                   FlatButton(
                     shape: CircleBorder(), //flatbutton con circle shape
-                    onPressed: (){},
+                    onPressed: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context){
+                          return CityScreen();
+                        },),
+                      );
+                    },
                     padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0 , 0.0),
                     child: Container(
                       padding: EdgeInsets.all(8.0),
@@ -82,7 +113,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       child: Icon(
                         Icons.location_city,
                         color: Colors.white,
-                        size: 40.0,
+                        size: kIconSize,
                       ),
                     ),
                   ),
@@ -95,19 +126,18 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: Row(
                   children: [
                     Text(
-                      '${temperature.round()}º ',
+                      '$temperature º',
                       style: kTemperatureTextStyle,
                     ),
-                    Text(
-                      "❄",
-                      style: kConditionTextStyle,
+                    Image(
+                      image: weatherImage
                     )
                   ],
                 ),
               ),
 
               Text(
-                "Hoy hace frío en $cityName 🥶, ¡ Haz que tu abuela esté orgullosa y coge abrigo ! 🧥",
+                message,
                 style: kMessageTextStyle,
                 textAlign: TextAlign.right,
               )

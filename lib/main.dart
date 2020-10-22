@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geoclima/screens/city_screen.dart';
 import 'package:geoclima/screens/loading_screen.dart';
 import 'package:geoclima/screens/location_screen.dart';
 
@@ -12,7 +13,7 @@ class GeoClima extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData.dark(),
-        home: LoadingScreen()
+        home: LoadingScreen(), //La app inica en location_screen.dart
     );
   }
 }

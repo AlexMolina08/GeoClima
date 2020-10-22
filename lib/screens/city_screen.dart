@@ -8,40 +8,69 @@ class CityScreen extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("images/city_background.jpg"),
-              fit: BoxFit.cover
-          ),
+              image: AssetImage("images/backgrounds/city_background.jpg"),
+              fit: BoxFit.cover),
         ),
         constraints: BoxConstraints.expand(),
         child: SafeArea(
-          child: Column(
-            children: [
-              //Boton para ir a página anterior
-              Align(
-                alignment: Alignment.topLeft,
-                child: FlatButton(
-                  onPressed: () {},
-                  child: Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.white,
-                    size: 40.0,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.0),
+            child: Column(
+              children: [
+                //Boton para ir a página anterior
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: FlatButton(
+                    minWidth: kIconSize,
+                    padding: EdgeInsets.only(top: 10.0),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                      size: kIconSize,
+                    ),
                   ),
                 ),
-              ),
-              //textField
-              Container(
-                padding: EdgeInsets.all(20.0),
-                child: null,
-              ),
-
-              FlatButton(
-                onPressed: () {},
-                child: Text(
-                  "Dime el tiempo",
-                  style: kButtonTextStyle,
+                SizedBox(height: 30.0,),
+                //TEXTFIELD CIUDAD
+                Expanded(
+                  flex: 1,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Color(0xccfafafa)
+                    ),
+                  ),
                 ),
-              )
-            ],
+                //textField
+                Expanded(
+                  flex : 2,
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: FlatButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Ver el tiempo",
+                        style: kInformationTitleTextStyle,
+                      ),
+                    ),
+                  ),
+                ),
+
+                Expanded(
+                  flex: 5 ,
+                  child: Container(
+                    child: Text(
+                      "Conoce el tiempo actual de cualquier ciudad del mundo",
+                      style: kInformationTextStyle,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
