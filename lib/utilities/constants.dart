@@ -43,7 +43,7 @@ const TextStyle kInformationTextStyle = TextStyle(
     fontFamily: "Poppins",
     fontWeight: FontWeight.w100,
     fontSize: 20.0,
-    color: Color(0xccfafafa));
+    color: Color(0xffffffff));
 
 const TextStyle kLoadingTextStyle =
     TextStyle(fontFamily: "Poppins", fontSize: 20.0, color: Colors.blueGrey);

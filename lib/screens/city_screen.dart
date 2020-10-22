@@ -64,7 +64,7 @@ class _CityScreenState extends State<CityScreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
-                      color: Colors.blue[800],
+                      color: Color(0xff455a64),
                       onPressed: () async {
                         //traducimos el nombre introducido por el usuario
                         Translation translation = await translator
@@ -76,7 +76,7 @@ class _CityScreenState extends State<CityScreen> {
                         //introducida por el user a la pantalla anterior
                       },
                       child: Text(
-                        "Ver el tiempo",
+                        "Consultar tiempo",
                         style: kInformationTitleTextStyle,
                       ),
                     ),

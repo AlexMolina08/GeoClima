@@ -40,7 +40,7 @@ class _LocationScreenState extends State<LocationScreen> {
           int condition = 0;
           weatherImage = AssetImage('images/weather/error.png');
           backgroundImage = weather.getBackgroundImage(condition);
-          message = "Parece que ha habido un error , intentalo de nuevo ";
+          message = "No se ha podido obtener el tiempo de la ubicación 😭 intentalo de nuevo ";
         }
       }
     );
